@@ -15,14 +15,14 @@ function playGame() {
     });
 
     console.log("Game over")
-
+    let outcome = `You tied; ${scores.human} to ${scores.computer}`
     if (scores.human > scores.computer) {
-        console.log(`You won; ${scores.human} to ${scores.computer}`)
+        outcome = `You won; ${scores.human} to ${scores.computer}`
     } else if (scores.computer > scores.human) {
-        console.log(`You lose; ${scores.human} to ${scores.computer}`)
-    } else {
-        console.log(`You tied; ${scores.human} to ${scores.computer}`)
+        outcome = `You lose; ${scores.human} to ${scores.computer}`
     }
+    console.log(outcome)
+    alert(outcome)
 }
 
 function playRound() {
@@ -57,3 +57,5 @@ function getHumanChoice() {
 function random(min, max) {
     return Math.floor((min + Math.random() * (max - min + 1)))
 }
+
+playGame()
