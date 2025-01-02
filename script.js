@@ -8,6 +8,7 @@ var rules = {
     scissors: { beats: 'paper' }
 }
 var choices = Object.keys(rules)
+
 var listener = function(event) {
     playRound(event.target.id)
 }
@@ -15,22 +16,12 @@ document.querySelectorAll(".selection").forEach((button) => {
     button.addEventListener("click", listener)
 })
 
-function playGame() {
-    displayResult("Game over")
-    let outcome = `You tied; ${scores.player} to ${scores.computer}`
-    if (scores.player > scores.computer) {
-        outcome = `You won; ${scores.player} to ${scores.computer}`
-    } else if (scores.computer > scores.player) {
-        outcome = `You lose; ${scores.player} to ${scores.computer}`
-    }
-    displayResult(outcome)
-}
-
 function playRound(playerChoice) {
     let computerChoice = getComputerChoice()
     
     //TODO display playerchoice and computer choice?
 
+    //determine round winner and update scores 
     if (doesBeat(computerChoice, playerChoice)) {
         displayResult(`You lose; ${computerChoice} beats ${playerChoice}`)
         scores.computer++
@@ -41,9 +32,11 @@ function playRound(playerChoice) {
         displayResult(`You tied; ${playerChoice} vs ${computerChoice}`)
     }
 
+    //update score display
     document.querySelector("#player").textContent = scores.player
     document.querySelector("#computer").textContent = scores.computer
 
+    //endgame
     if (isGameOver()) {
         if (scores.player > scores.computer) {
             outcome = `You win`
@@ -52,6 +45,7 @@ function playRound(playerChoice) {
         }
         displayResult(outcome)
         document.querySelectorAll(".selection").forEach((button) => {
+            button.disabled=true
             button.removeEventListener("click", listener)
         })
     }
